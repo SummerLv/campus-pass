@@ -69,35 +69,35 @@ body {
   font-size: 16px;
   color: #333;
   padding-bottom: 8px;
-  border-bottom: 2px solid #333;
+  border-bottom: 3px solid #3b5998;
   font-weight: 500;
 }
 .tab-bar .tab-logout {
   position: absolute;
   right: 16px;
   font-size: 14px;
-  color: #576b95;
+  color: #e74c3c;
   cursor: pointer;
 }
 
 /* QR 码区域 */
 .qr-section {
-  background: linear-gradient(180deg, #e8f5e9 0%, #c8e6c9 100%);
+  background: #fafafa;
   padding: 20px 0 24px;
   text-align: center;
 }
 .qr-section .time-display {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 500;
   color: #333;
   margin-bottom: 16px;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
 }
 .qr-section .qr-wrapper {
   display: inline-block;
   background: #fff;
-  padding: 12px;
+  padding: 16px;
   border-radius: 4px;
 }
 .qr-section .qr-hint {
@@ -135,12 +135,21 @@ body {
   word-break: break-all;
 }
 .info-row .info-value.green {
-  color: #67b168;
+  color: #e74c3c;
   font-weight: 500;
 }
 .info-row .info-value .check-icon {
-  color: #67b168;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: #5bbfbf;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
   margin-left: 4px;
+  vertical-align: middle;
 }
 
 /* 校外人员信息 */
@@ -166,9 +175,10 @@ body {
   gap: 80px;
 }
 .bottom-nav .nav-arrow {
-  font-size: 22px;
-  color: #999;
+  font-size: 24px;
+  color: #666;
   cursor: pointer;
+  font-weight: 300;
 }
 .page-content {
   padding-bottom: 50px;
@@ -383,8 +393,8 @@ body {
 
   <!-- 底部导航 -->
   <div class="bottom-nav">
-    <div class="nav-arrow">&lt;</div>
-    <div class="nav-arrow">&gt;</div>
+    <div class="nav-arrow">&#10094;</div>
+    <div class="nav-arrow">&#10095;</div>
   </div>
 </div>
 
@@ -417,13 +427,17 @@ body {
   function generateQR() {
     var el = document.getElementById('qrCode');
     el.innerHTML = '';
+    // 中等长度内容，匹配原图 QR 码密度
+    var ts = Date.now().toString(36);
+    var rid = Math.random().toString(36).substring(2, 10);
+    var content = 'ehall.szpu.edu.cn/qr/' + ts + rid;
     new QRCode(el, {
-      text: 'https://ehall.szpu.edu.cn/pass/' + generateUUID(),
-      width: 260,
-      height: 260,
-      colorDark: '#67b168',
+      text: content,
+      width: 240,
+      height: 240,
+      colorDark: '#5FA39B',
       colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.M
+      correctLevel: QRCode.CorrectLevel.L
     });
   }
 
@@ -464,7 +478,7 @@ body {
     // 入校时间
     var dateStr = info.date || getTodayStr();
     var timeStr = dateStr + ' ' + (info.time_start || '08:00') + '-' + (info.time_end || '17:00');
-    document.getElementById('v_time').innerHTML = timeStr + '<span class="check-icon">&#10004;</span>';
+    document.getElementById('v_time').innerHTML = timeStr + '<span class="check-icon">&#10003;</span>';
 
     document.getElementById('v_gates').textContent = info.gates || '';
     document.getElementById('v_contact').textContent = info.contact || '';
